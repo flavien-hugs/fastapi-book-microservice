@@ -1,0 +1,17 @@
+[flake8]
+max-line-length = 88
+select = C,E,F,W,B,B950
+exclude = .git, */.github/*, */migrations/*, .vscode
+ignore = E126, E203, E501, W503, E302, E402
+
+[isort]
+profile = black
+src_paths = apilabonnedame
+
+[coverage:report]
+fail_under = 100
+omit =
+    */migrations/*
+    */core/*
+show_missing = True
+skip_covered = True
