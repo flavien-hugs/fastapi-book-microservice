@@ -1,4 +1,4 @@
-MANAGE := FLASK_APP=runserver.py
+MANAGE := python
 
 PHONY: help
 help: ## Show this help
@@ -15,6 +15,10 @@ install: venv ## Install or update dependencies
 .PHONY: freeze
 freeze: ## Pin current dependencies
 	pipenv requirements > requirements.txt
+
+.PHONY: runserver
+runserver: ## Run the server
+	uvicorn app.main:app --reload
 
 .PHONY: kill-process
 kill-process: ## Kill process the server
