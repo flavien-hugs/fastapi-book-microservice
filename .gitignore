@@ -53,8 +53,8 @@ env.bak/
 venv.bak/
 
 # db
-.env
 *.db
 *.lock
+.env
 *.sqlite
 .isort.cfg
