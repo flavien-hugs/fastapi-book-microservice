@@ -23,10 +23,5 @@ async def delete_book(id: int):
 
 
 async def update_book(id: int, payload: BookIn):
-    query = (
-        books
-        .update()
-        .where(books.c.id == id)
-        .values(**payload.dict())
-    )
+    query = books.update().where(books.c.id == id).values(**payload.dict())
     return await database.execute(query=query)

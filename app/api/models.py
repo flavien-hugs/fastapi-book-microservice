@@ -5,12 +5,12 @@ from sqlalchemy import MetaData, Column, Integer, String, Table, ARRAY
 metadata = MetaData()
 
 books = Table(
-    'books',
+    "books",
     metadata,
-    Column('id', Integer, primary_key=True, index=True),
-    Column('author_name', String(80)),
-    Column('book_description', String(250)),
-    Column('book_genres', ARRAY(String))
+    Column("id", Integer, primary_key=True, index=True),
+    Column("author_name", String(80)),
+    Column("book_description", String(250)),
+    Column("book_genres", ARRAY(String)),
 )
 
 

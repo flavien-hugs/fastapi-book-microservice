@@ -3,14 +3,10 @@ from sqlalchemy.orm import Session
 from fastapi import Header, APIRouter, Depends, HTTPException
 
 from . import db_manager
-from .database import database
 from .models import BookIn, BookOut
 
 books = APIRouter()
 
-
-def get_db():
-    db = database.SessionLocal()
 
 @books.get("/")
 async def index():
@@ -26,10 +22,7 @@ async def list_book():
 @books.post("/book/add/", status_code=201)
 async def add_book(payload: BookIn):
     book_id = await db_manager.add_book(payload)
-    response = {
-        "id": book_id,
-        **payload.dict()
-    }
+    response = {"id": book_id, **payload.dict()}
     return response
 
 

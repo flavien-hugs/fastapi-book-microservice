@@ -1,19 +1,21 @@
 from fastapi import FastAPI
 
-from .api.books import books
-from .api.models import metadata
-from .api.database import database, engine
+from . import books, models
+from .api.database import database as db, engine
 
-metadata.create_all(engine)
+models.metadata.create_all(engine)
 
 app = FastAPI()
 
+
 @app.on_event("startup")
 async def startup():
-    await database.connect()
+    await db.connect()
+
 
 @app.on_event("shutdown")
 async def shutdown():
-    await database.disconnect()
+    await db.disconnect()
+
 
 app.include_router(books)
