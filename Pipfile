@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 fastapi = "*"
 uvicorn = "*"
+databases = {extras = ["postgresql"], version = "*"}
+psycopg2-binary = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pre-commit = "*"
