@@ -5,7 +5,7 @@ from .api.database import database as db, engine
 
 models.metadata.create_all(engine)
 
-app = FastAPI()
+app = FastAPI(title="Book API", openapi_url="/openapi.json")
 
 
 @app.on_event("startup")
@@ -18,4 +18,10 @@ async def shutdown():
     await db.disconnect()
 
 
-app.include_router(books)
+app.include_router(books.api_book_router)
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="localhost", port=8000, log_level="debug", reload=True)
