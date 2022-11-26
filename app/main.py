@@ -18,7 +18,7 @@ async def shutdown():
     await db.disconnect()
 
 
-app.include_router(books.api_book_router)
+app.include_router(books.book_router, prefix='/api/v1/books/', tags=['books'])
 
 
 if __name__ == "__main__":
