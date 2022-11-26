@@ -1,53 +1,52 @@
 from typing import List
-from fastapi import Header, APIRouter, HTTPException
+from sqlalchemy.orm import Session
+from fastapi import Header, APIRouter, Depends, HTTPException
 
-from .models import Book
-
-
-fake_book_db = [
-    {
-        "name": "Star Wars: Episode IX - The Rise of Skywalker",
-        "plot": "The surviving members of the resistance face the First Order once again.",
-        "genres": ["Action", "Adventure", "Fantasy"],
-    }
-]
+from . import db_manager
+from .database import database
+from .models import BookIn, BookOut
 
 books = APIRouter()
 
 
+def get_db():
+    db = database.SessionLocal()
+
 @books.get("/")
-async def indexPage():
-    context = {"message": "Welcome to book microservice api"}
-    return context
+async def index():
+    response = {"message": "Welcome to book list"}
+    return response
 
 
-@books.get("/books/", response_model=List[Book])
+@books.get("/books/", response_model=List[BookOut])
 async def list_book():
-    return fake_book_db
+    return await db_manager.get_all_books()
 
 
 @books.post("/book/add/", status_code=201)
-async def add_book(payload: Book):
-    book = payload.dict()
-    fake_book_db.append(book)
-    context = {"id": len(fake_book_db) - 1}
-    return context
+async def add_book(payload: BookIn):
+    book_id = await db_manager.add_book(payload)
+    response = {
+        "id": book_id,
+        **payload.dict()
+    }
+    return response
 
 
 @books.put("/book/update/{id}/")
-async def update_book(id: int, payload: Book):
-    book = payload.dict()
-    books_length = len(fake_book_db)
-    if 0 <= id <= books_length:
-        fake_book_db[id] = book
-        return None
-    return HTTPException(status_code=404, detail="Book with given id not found")
+async def update_book(id: int, payload: BookIn):
+    book = await db_manager.get_book(id)
+    if not book:
+        HTTPException(status_code=404, detail="Book not found")
+    update_data = payload.dict(exclude_unset=True)
+    book_id_db = BookIn(**book)
+    update_book = book_id_db.copy(update=update_data)
+    return await db_manager.update_book(id, update_book)
 
 
-@books.put("/book/delete/{id}/")
+@books.delete("/book/delete/{id}/")
 async def delete_book(id: int):
-    books_length = len(fake_book_db)
-    if 0 <= id <= books_length:
-        del fake_book_db[id]
-        return None
-    return HTTPException(status_code=404, detail="Book with given id not found")
+    book = await db_manager.get_book(id)
+    if not book:
+        HTTPException(status_code=404, detail="Book not found")
+    return await db_manager.delete_book(id)
