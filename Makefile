@@ -15,10 +15,28 @@ install: venv ## Install or update dependencies
 .PHONY: freeze
 freeze: ## Pin current dependencies
 	pipenv requirements > requirements.txt
+	cp Pipfile book_service/
+	cp Pipfile author_service/
 
 .PHONY: runserver
 runserver: ## Run the server
-	uvicorn app.main:app --reload
+	uvicorn author_service.app.main:app --reload
+
+.PHONY: docker-compose-build
+docker-compose-build: ## Build docker image
+	docker-compose build
+
+.PHONY: docker-compose-up
+docker-compose-up: ## Execute docker image
+	docker-compose up -d --build
+
+.PHONY: docker-compose-down
+docker-compose-down: ## Remove docker image
+	docker-compose down
+
+.PHONY: docker-compose-logs
+docker-compose-logs: ## Check for errors in the logs if this doesn't work
+	docker-compose logs -f
 
 .PHONY: kill-process
 kill-process: ## Kill process the server
