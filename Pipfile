@@ -9,6 +9,7 @@ uvicorn = "*"
 databases = {extras = ["postgresql"], version = "*"}
 psycopg2-binary = "*"
 python-dotenv = "*"
+httpx = "*"
 
 [dev-packages]
 pre-commit = "*"
