@@ -1,0 +1,16 @@
+docker-compose*
+*.md
+.git
+.gitignore
+.isort.cfg
+readme.md
+LICENSE
+.vscode
+.idea
+.flake8
+.gitattributes
+.editorconfig
+Pipfile.lock
+Pipfile
+.env.prod
+.pre-commit-config.yaml
