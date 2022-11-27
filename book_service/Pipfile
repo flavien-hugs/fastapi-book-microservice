@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+uvicorn = "*"
+databases = {extras = ["postgresql"], version = "*"}
+psycopg2-binary = "*"
+python-dotenv = "*"
+httpx = "*"
+
+[dev-packages]
+pre-commit = "*"
+flake8 = "*"
+black = "*"
+isort = "*"
+
+[requires]
+python_version = "3.10"
