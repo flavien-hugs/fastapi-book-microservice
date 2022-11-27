@@ -30,5 +30,5 @@ books = Table(
     Column("book_title", String(80)),
     Column("book_description", String(250)),
     Column("book_genres", ARRAY(String)),
-    Column("authors_id", ARRAY(Integer))
+    Column("authors_id", ARRAY(Integer)),
 )
