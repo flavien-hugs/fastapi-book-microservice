@@ -7,6 +7,7 @@ Une simple architecture de microservice avec FastAPI
 
 - Python 3.8+
 - pipenv ou pip
+- Docker && Docker Compose
 
 ##  Cloner le projet
 
@@ -26,20 +27,18 @@ ou
 pip install -r requirements.txt
 ```
 
-### Exécuter le serveur
+### Construire le container avec docker
 
 ```
-uvicorn main:app --reload
-```
-
-### Exécuter le test
-
-```
-pytest test.py
+make docker-compose-up
 ```
 
 ## Documentation sur l'API
 
+```Endpoint authors
+http://localhost:8080/api/v1/authors/docs
 ```
-http://127.0.0.1:8000/docs
+
+```Endpoint books
+http://localhost:8080/api/v1/books/docs
 ```
